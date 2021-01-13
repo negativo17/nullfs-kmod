@@ -15,7 +15,7 @@
 %endif
 
 Name:           %{kmod_name}-kmod
-Version:        0.2
+Version:        0.3
 Release:        1%{?dist}
 Summary:        A virtual file system that behaves like /dev/null
 License:        GPLv3+
@@ -62,5 +62,8 @@ install kmod-%{kmod_name}.conf %{buildroot}%{_sysconfdir}/depmod.d/
 rm -f %{buildroot}/lib/modules/%{kversion}.%{_target_cpu}/modules.*
 
 %changelog
+* Wed Jan 13 2021 Simone Caronni <negativo17@gmail.com> - 0.3-1
+- Update to 0.3.
+
 * Thu Dec 10 2020 Simone Caronni <negativo17@gmail.com> - 0.2-1
 - First build.
