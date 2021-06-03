@@ -20,7 +20,7 @@
   fi
 
 Name:           nullfsvfs-kmod
-Version:        0.3
+Version:        0.5
 Release:        1%{?dist}
 Summary:        A virtual file system that behaves like /dev/null
 License:        GPLv3+
@@ -68,6 +68,9 @@ done
 %{?akmod_install}
 
 %changelog
+* Thu Jun 03 2021 Simone Caronni <negativo17@gmail.com> - 0.5-1
+- Update to 0.5.
+
 * Wed Jan 13 2021 Simone Caronni <negativo17@gmail.com> - 0.3-1
 - Update to 0.3.
 
