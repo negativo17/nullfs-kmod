@@ -15,11 +15,11 @@
 
 # RHEL 8.3:
 %if 0%{?rhel} == 8
-%{!?kversion: %global kversion 4.18.0-240.1.1.el8_3}
+%{!?kversion: %global kversion 4.18.0-240.22.1.el8_3}
 %endif
 
 Name:           %{kmod_name}-kmod
-Version:        0.3
+Version:        0.5
 Release:        1%{?dist}
 Summary:        A virtual file system that behaves like /dev/null
 License:        GPLv3+
@@ -92,10 +92,14 @@ install kmod-%{kmod_name}.conf %{buildroot}%{_sysconfdir}/depmod.d/
 rm -f %{buildroot}/lib/modules/%{kversion}.%{_target_cpu}/modules.*
 
 %files -n kmod-%{kmod_name}
+%license LICENSE
 /lib/modules/%{kversion}.%{_target_cpu}/extra/*
 %config /etc/depmod.d/kmod-%{kmod_name}.conf
 
 %changelog
+* Thu Jun 03 2021 Simone Caronni <negativo17@gmail.com> - 0.5-1
+- Update to 0.5.
+
 * Wed Jan 13 2021 Simone Caronni <negativo17@gmail.com> - 0.3-1
 - Update to 0.3.
 - Merge kmodtool script into SPEC file and remove obsolete stuff.
