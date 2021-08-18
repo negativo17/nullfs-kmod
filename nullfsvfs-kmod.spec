@@ -7,17 +7,13 @@
 
 %global debug_package %{nil}
 
-%global zipmodules 1
-
 %define __spec_install_post \
   %{__arch_install_post}\
   %{__os_install_post}\
   %{__mod_compress_install_post}
 
 %define __mod_compress_install_post \
-  if [ "%{zipmodules}" -eq "1" ] && [ $kernel_version ]; then \
-    find %{buildroot}/usr/lib/modules/ -type f -name '*.ko' | xargs xz; \
-  fi
+  find %{buildroot}/usr/lib/modules/ -type f -name '*.ko' | xargs xz;
 
 Name:           nullfsvfs-kmod
 Version:        0.5
