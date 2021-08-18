@@ -13,7 +13,10 @@
   %{__mod_compress_install_post}
 
 %define __mod_compress_install_post \
-  find %{buildroot}/usr/lib/modules/ -type f -name '*.ko' | xargs xz;
+  if [ $kernel_version ]; then \
+    find %{buildroot} -type f -name '*.ko' | xargs %{__strip} --strip-debug; \
+    find %{buildroot} -type f -name '*.ko' | xargs xz; \
+  fi
 
 Name:           nullfsvfs-kmod
 Version:        0.8
@@ -33,7 +36,13 @@ Provides:       %{name}-common == %{version}-%{release}
 %{expand:%(kmodtool --target %{_target_cpu} --repo negativo17.org --kmodname %{name} %{?buildforkernels:--%{buildforkernels}} %{?kernels:--for-kernels "%{?kernels}"} 2>/dev/null) }
 
 %description
-The nullfsvs %{version} kernel module for kernel %{kversion}.
+A virtual file system that behaves like /dev/null. It can handle regular file
+operations but writing to files does not store any data. The file size is
+however saved, so reading from the files behaves like reading from /dev/zero
+with a fixed size.
+
+Writing and reading is basically an NOOP, so it can be used for performance
+testing with applications that require directory structures.
 
 %prep
 # error out if there was something wrong with kmodtool
@@ -66,6 +75,7 @@ done
 %changelog
 * Wed Aug 18 2021 Simone Caronni <negativo17@gmail.com> - 0.8-1
 - Update to 0.8.
+- Update SPEC file.
 
 * Thu Jun 03 2021 Simone Caronni <negativo17@gmail.com> - 0.5-1
 - Update to 0.5.
