@@ -16,22 +16,11 @@
 # Generate kernel symbols requirements:
 %global _use_internal_dependency_generator 0
 
-# If kversion isn't defined on the rpmbuild line, define it here. For Fedora,
-# kversion needs always to be defined as there is no kABI support.
-
-# RHEL 7.9:
-%if 0%{?rhel} == 7
-%{!?kversion: %global kversion 3.10.0-1160.36.2.el7}
-%endif
-
-# RHEL 8.4:
-%if 0%{?rhel} == 8
-%{!?kversion: %global kversion 4.18.0-305.12.1.el8_4}
-%endif
+%{!?kversion: %global kversion %(uname -r)}
 
 Name:           %{kmod_name}-kmod
 Version:        0.8
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A virtual file system that behaves like /dev/null
 License:        GPLv3+
 URL:            https://github.com/abbbi/%{kmod_name}
@@ -40,14 +29,14 @@ Source0:        %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildRequires:  elfutils-libelf-devel
 BuildRequires:  gcc
-BuildRequires:  kernel-devel %{?kversion:== %{kversion}}
+BuildRequires:  kernel-devel
 BuildRequires:  kmod
 BuildRequires:  redhat-rpm-config
 
 %if 0%{?rhel} == 7
-BuildRequires:  kernel-abi-whitelists %{?kversion:== %{kversion}}
+BuildRequires:  kernel-abi-whitelists
 %else
-BuildRequires:  kernel-abi-stablelists %{?kversion:== %{kversion}}
+BuildRequires:  kernel-abi-stablelists
 BuildRequires:  kernel-rpm-macros
 %endif
 
@@ -118,6 +107,9 @@ rm -f %{buildroot}/lib/modules/%{kversion}.%{_target_cpu}/modules.*
 %config /etc/depmod.d/kmod-%{kmod_name}.conf
 
 %changelog
+* Wed Aug 18 2021 Simone Caronni <negativo17@gmail.com> - 0.8-2
+- Simplify kernel requirements.
+
 * Wed Aug 18 2021 Simone Caronni <negativo17@gmail.com> - 0.8-1
 - Update to 0.8.
 - Add missing build requirement for correctly adding kernel symbols as
