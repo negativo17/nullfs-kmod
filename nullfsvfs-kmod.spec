@@ -2,6 +2,17 @@
 
 %global	debug_package %{nil}
 
+%define __spec_install_post \
+  %{__arch_install_post}\
+  %{__os_install_post}\
+  %{__mod_compress_install_post}
+
+%define __mod_compress_install_post \
+  if [ $kernel_version ]; then \
+    find %{buildroot} -type f -name '*.ko' | xargs %{__strip} --strip-debug; \
+    find %{buildroot} -type f -name '*.ko' | xargs xz; \
+  fi
+
 # Generate kernel symbols requirements:
 %global _use_internal_dependency_generator 0
 
@@ -30,14 +41,24 @@ Source0:        %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 BuildRequires:  elfutils-libelf-devel
 BuildRequires:  gcc
 BuildRequires:  kernel-devel %{?kversion:== %{kversion}}
-BuildRequires:  kernel-abi-whitelists %{?kversion:== %{kversion}}
 BuildRequires:  kmod
 BuildRequires:  redhat-rpm-config
 
+%if 0%{?rhel} == 7
+BuildRequires:  kernel-abi-whitelists %{?kversion:== %{kversion}}
+%else
+BuildRequires:  kernel-abi-stablelists %{?kversion:== %{kversion}}
+BuildRequires:  kernel-rpm-macros
+%endif
+
 %description
-This package provides the proprietary NVIDIA OpenGL kernel driver module.
-It is built to depend upon the specific ABI provided by a range of releases of
-the same variant of the Linux kernel and not on any one specific build.
+A virtual file system that behaves like /dev/null. It can handle regular file
+operations but writing to files does not store any data. The file size is
+however saved, so reading from the files behaves like reading from /dev/zero
+with a fixed size.
+
+Writing and reading is basically an NOOP, so it can be used for performance
+testing with applications that require directory structures.
 
 %package -n kmod-%{kmod_name}
 Summary:    %{kmod_name} kernel module(s)
@@ -99,6 +120,11 @@ rm -f %{buildroot}/lib/modules/%{kversion}.%{_target_cpu}/modules.*
 %changelog
 * Wed Aug 18 2021 Simone Caronni <negativo17@gmail.com> - 0.8-1
 - Update to 0.8.
+- Add missing build requirement for correctly adding kernel symbols as
+  requirements.
+- Strip modules.
+- Compress modules with xz.
+- Update description.
 
 * Thu Jun 03 2021 Simone Caronni <negativo17@gmail.com> - 0.5-1
 - Update to 0.5.
