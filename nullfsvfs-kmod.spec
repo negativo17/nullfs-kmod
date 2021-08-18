@@ -16,7 +16,7 @@
   find %{buildroot}/usr/lib/modules/ -type f -name '*.ko' | xargs xz;
 
 Name:           nullfsvfs-kmod
-Version:        0.5
+Version:        0.8
 Release:        1%{?dist}
 Summary:        A virtual file system that behaves like /dev/null
 License:        GPLv3+
@@ -64,6 +64,9 @@ done
 %{?akmod_install}
 
 %changelog
+* Wed Aug 18 2021 Simone Caronni <negativo17@gmail.com> - 0.8-1
+- Update to 0.8.
+
 * Thu Jun 03 2021 Simone Caronni <negativo17@gmail.com> - 0.5-1
 - Update to 0.5.
 
