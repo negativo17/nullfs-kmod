@@ -19,8 +19,8 @@
 %{!?kversion: %global kversion %(uname -r)}
 
 Name:           %{kmod_name}-kmod
-Version:        0.8
-Release:        2%{?dist}
+Version:        0.10
+Release:        1%{?dist}
 Summary:        A virtual file system that behaves like /dev/null
 License:        GPLv3+
 URL:            https://github.com/abbbi/%{kmod_name}
@@ -107,6 +107,9 @@ rm -f %{buildroot}/lib/modules/%{kversion}.%{_target_cpu}/modules.*
 %config /etc/depmod.d/kmod-%{kmod_name}.conf
 
 %changelog
+* Thu Sep 23 2021 Simone Caronni <negativo17@gmail.com> - 0.10-1
+- Update to 0.10.
+
 * Wed Aug 18 2021 Simone Caronni <negativo17@gmail.com> - 0.8-2
 - Simplify kernel requirements.
 
