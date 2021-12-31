@@ -19,7 +19,7 @@
 %{!?kversion: %global kversion %(uname -r)}
 
 Name:           %{kmod_name}-kmod
-Version:        0.10
+Version:        0.12.1
 Release:        1%{?dist}
 Summary:        A virtual file system that behaves like /dev/null
 License:        GPLv3+
@@ -107,6 +107,9 @@ rm -f %{buildroot}/lib/modules/%{kversion}.%{_target_cpu}/modules.*
 %config /etc/depmod.d/kmod-%{kmod_name}.conf
 
 %changelog
+* Fri Dec 31 2021 Simone Caronni <negativo17@gmail.com> - 0.12.1-1
+- Update to 0.12.1.
+
 * Thu Sep 23 2021 Simone Caronni <negativo17@gmail.com> - 0.10-1
 - Update to 0.10.
 
