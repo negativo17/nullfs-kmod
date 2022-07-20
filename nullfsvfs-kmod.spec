@@ -20,7 +20,7 @@
 
 Name:           %{kmod_name}-kmod
 Version:        0.12.1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A virtual file system that behaves like /dev/null
 License:        GPLv3+
 URL:            https://github.com/abbbi/%{kmod_name}
@@ -107,6 +107,9 @@ rm -f %{buildroot}/lib/modules/%{kversion}.%{_target_cpu}/modules.*
 %config /etc/depmod.d/kmod-%{kmod_name}.conf
 
 %changelog
+* Wed Jul 20 2022 Simone Caronni <negativo17@gmail.com> - 0.12.1-2
+- Rebuild for updated kABI.
+
 * Fri Dec 31 2021 Simone Caronni <negativo17@gmail.com> - 0.12.1-1
 - Update to 0.12.1.
 
