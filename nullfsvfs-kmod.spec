@@ -19,13 +19,13 @@
 %{!?kversion: %global kversion %(uname -r)}
 
 Name:           %{kmod_name}-kmod
-Version:        0.12.1
-Release:        3%{?dist}
+Version:        0.13
+Release:        1%{?dist}
 Summary:        A virtual file system that behaves like /dev/null
 License:        GPLv3+
 URL:            https://github.com/abbbi/%{kmod_name}
 
-Source0:        %{url}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildRequires:  elfutils-libelf-devel
 BuildRequires:  gcc
@@ -107,6 +107,9 @@ rm -f %{buildroot}/lib/modules/%{kversion}.%{_target_cpu}/modules.*
 %config /etc/depmod.d/kmod-%{kmod_name}.conf
 
 %changelog
+* Mon Nov 21 2022 Simone Caronni <negativo17@gmail.com> - 0.13-1
+- Update to 0.13.
+
 * Thu Sep 29 2022 Simone Caronni <negativo17@gmail.com> - 0.12.1-3
 - Rebuild for updated kABI.
 
