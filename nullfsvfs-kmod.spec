@@ -19,8 +19,8 @@
 %{!?kversion: %global kversion %(uname -r)}
 
 Name:           %{kmod_name}-kmod
-Version:        0.15
-Release:        2%{?dist}
+Version:        0.17
+Release:        1%{?dist}
 Summary:        A virtual file system that behaves like /dev/null
 License:        GPLv3+
 URL:            https://github.com/abbbi/%{kmod_name}
@@ -107,6 +107,9 @@ rm -f %{buildroot}/lib/modules/%{kversion}.%{_target_cpu}/modules.*
 %config /etc/depmod.d/kmod-%{kmod_name}.conf
 
 %changelog
+* Mon Nov 20 2023 Simone Caronni <negativo17@gmail.com> - 0.17-1
+- Update to 0.17.
+
 * Thu May 25 2023 Simone Caronni <negativo17@gmail.com> - 0.15-2
 - Rebuild for updated kernels.
 
