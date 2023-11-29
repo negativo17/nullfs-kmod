@@ -4,8 +4,8 @@
 %global debug_package %{nil}
 
 Name:           nullfsvfs-kmod
-Version:        0.15
-Release:        2%{?dist}
+Version:        0.17
+Release:        1%{?dist}
 Summary:        A virtual file system that behaves like /dev/null
 License:        GPLv3+
 URL:            https://github.com/abbbi/nullfsvfs
@@ -39,7 +39,7 @@ kmodtool  --target %{_target_cpu}  --repo negativo17.org --kmodname %{name} %{?b
 
 for kernel_version in %{?kernel_versions}; do
   mkdir _kmod_build_${kernel_version%%___*}
-  cp -fr * _kmod_build_${kernel_version%%___*}
+  cp -fr nullfs.c Makefile _kmod_build_${kernel_version%%___*}
 done
 
 %build
@@ -58,6 +58,9 @@ done
 %{?akmod_install}
 
 %changelog
+* Wed Nov 29 2023 Simone Caronni <negativo17@gmail.com> - 0.17-1
+- Update to 0.17.
+
 * Wed Nov 29 2023 Simone Caronni <negativo17@gmail.com> - 0.15-2
 - Drop custom signing and compressing in favour of kmodtool.
 
