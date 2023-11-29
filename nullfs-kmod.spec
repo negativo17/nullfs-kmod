@@ -1,4 +1,4 @@
-%global	kmod_name nullfsvfs
+%global	kmod_name nullfs
 
 %global	debug_package %{nil}
 
@@ -20,12 +20,12 @@
 
 Name:           %{kmod_name}-kmod
 Version:        0.17
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A virtual file system that behaves like /dev/null
 License:        GPLv3+
 URL:            https://github.com/abbbi/%{kmod_name}
 
-Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:        %{url}/archive/v%{version}.tar.gz#/nullfsvfs-%{version}.tar.gz
 
 BuildRequires:  elfutils-libelf-devel
 BuildRequires:  gcc
@@ -83,7 +83,7 @@ if [ -x "/usr/sbin/weak-modules" ]; then
 fi
 
 %prep
-%autosetup -p1 -n %{kmod_name}-%{version}
+%autosetup -p1 -n nullfsvfs-%{version}
 
 echo "override %{kmod_name} * weak-updates/%{kmod_name}" > kmod-%{kmod_name}.conf
 
@@ -107,6 +107,9 @@ rm -f %{buildroot}/lib/modules/%{kversion}.%{_target_cpu}/modules.*
 %config /etc/depmod.d/kmod-%{kmod_name}.conf
 
 %changelog
+* Wed Nov 29 2023 Simone Caronni <negativo17@gmail.com> - 0.17-2
+- Rename to nullfs.
+
 * Mon Nov 20 2023 Simone Caronni <negativo17@gmail.com> - 0.17-1
 - Update to 0.17.
 
