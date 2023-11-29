@@ -3,14 +3,14 @@
 
 %global debug_package %{nil}
 
-Name:           nullfsvfs-kmod
+Name:           nullfs-kmod
 Version:        0.17
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A virtual file system that behaves like /dev/null
 License:        GPLv3+
 URL:            https://github.com/abbbi/nullfsvfs
 
-Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source0:        %{url}/archive/v%{version}.tar.gz#/nullfsvfs-%{version}.tar.gz
 
 # Get the needed BuildRequires (in parts depending on what we build for):
 BuildRequires:  kmodtool
@@ -58,6 +58,9 @@ done
 %{?akmod_install}
 
 %changelog
+* Wed Nov 29 2023 Simone Caronni <negativo17@gmail.com> - 0.17-2
+- Rename to nullfs.
+
 * Wed Nov 29 2023 Simone Caronni <negativo17@gmail.com> - 0.17-1
 - Update to 0.17.
 
