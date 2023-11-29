@@ -1,46 +1,23 @@
-# buildforkernels macro hint: when you build a new version or a new release
-# that contains bugfixes or other improvements then you must disable the
-# "buildforkernels newest" macro for just that build; immediately after
-# queuing that build enable the macro again for subsequent builds; that way
-# a new akmod package will only get build when a new one is actually needed
+# Build only the akmod package and no kernel module packages:
 %define buildforkernels akmod
 
 %global debug_package %{nil}
 
-%global mok_algo sha512
-%global mok_key /usr/src/akmods/mok.key
-%global mok_der /usr/src/akmods/mok.der
-
-%define __spec_install_post \
-  %{__arch_install_post}\
-  %{__os_install_post}\
-  %{__mod_install_post}
-
-%define __mod_install_post \
-  if [ $kernel_version ]; then \
-    find %{buildroot} -type f -name '*.ko' | xargs %{__strip} --strip-debug; \
-    if [ -f /usr/src/akmods/mok.key ] && [ -f /usr/src/akmods/mok.der ]; then \
-      find %{buildroot} -type f -name '*.ko' | xargs echo; \
-      find %{buildroot} -type f -name '*.ko' | xargs -L1 /usr/lib/modules/${kernel_version%%___*}/build/scripts/sign-file %{mok_algo} %{mok_key} %{mok_der}; \
-    fi \
-    find %{buildroot} -type f -name '*.ko' | xargs xz; \
-  fi
-
 Name:           nullfsvfs-kmod
 Version:        0.15
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        A virtual file system that behaves like /dev/null
 License:        GPLv3+
 URL:            https://github.com/abbbi/nullfsvfs
 
 Source0:        %{url}/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
-# get the needed BuildRequires (in parts depending on what we build for)
+# Get the needed BuildRequires (in parts depending on what we build for):
 BuildRequires:  kmodtool
 
 Provides:       %{name}-common == %{version}-%{release}
 
-# kmodtool does its magic here
+# kmodtool does its magic here:
 %{expand:%(kmodtool --target %{_target_cpu} --repo negativo17.org --kmodname %{name} %{?buildforkernels:--%{buildforkernels}} %{?kernels:--for-kernels "%{?kernels}"} 2>/dev/null) }
 
 %description
@@ -53,9 +30,9 @@ Writing and reading is basically an NOOP, so it can be used for performance
 testing with applications that require directory structures.
 
 %prep
-# error out if there was something wrong with kmodtool
+# Error out if there was something wrong with kmodtool:
 %{?kmodtool_check}
-# print kmodtool output for debugging purposes:
+# Print kmodtool output for debugging purposes:
 kmodtool  --target %{_target_cpu}  --repo negativo17.org --kmodname %{name} %{?buildforkernels:--%{buildforkernels}} %{?kernels:--for-kernels "%{?kernels}"} 2>/dev/null
 
 %autosetup -p1 -n nullfsvfs-%{version}
@@ -81,6 +58,9 @@ done
 %{?akmod_install}
 
 %changelog
+* Wed Nov 29 2023 Simone Caronni <negativo17@gmail.com> - 0.15-2
+- Drop custom signing and compressing in favour of kmodtool.
+
 * Mon May 08 2023 Simone Caronni <negativo17@gmail.com> - 0.15-1
 - Update to 0.15.
 
