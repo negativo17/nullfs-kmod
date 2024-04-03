@@ -5,7 +5,7 @@
 
 Name:           nullfs-kmod
 Version:        0.17
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        A virtual file system that behaves like /dev/null
 License:        GPLv3+
 URL:            https://github.com/abbbi/nullfsvfs
@@ -58,6 +58,9 @@ done
 %{?akmod_install}
 
 %changelog
+* Wed Apr 03 2024 Simone Caronni <negativo17@gmail.com> - 0.17-3
+- Rebuild.
+
 * Wed Nov 29 2023 Simone Caronni <negativo17@gmail.com> - 0.17-2
 - Rename to nullfs.
 
