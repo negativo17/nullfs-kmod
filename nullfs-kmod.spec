@@ -20,12 +20,13 @@
 
 Name:           %{kmod_name}-kmod
 Version:        0.17
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        A virtual file system that behaves like /dev/null
 License:        GPLv3+
 URL:            https://github.com/abbbi/%{kmod_name}
 
 Source0:        %{url}/archive/v%{version}.tar.gz#/nullfsvfs-%{version}.tar.gz
+Patch0:         https://github.com/abbbi/nullfsvfs/commit/63661607ded4e3ee0ba35cf50e1166a2b203daeb.patch
 
 BuildRequires:  elfutils-libelf-devel
 BuildRequires:  gcc
@@ -107,6 +108,9 @@ rm -f %{buildroot}/lib/modules/%{kversion}/modules.*
 %config /etc/depmod.d/kmod-%{kmod_name}.conf
 
 %changelog
+* Mon Jun 03 2024 Simone Caronni <negativo17@gmail.com> - 0.17-5
+- Add patch for EL 9.4 kernel backports.
+
 * Wed Apr 03 2024 Simone Caronni <negativo17@gmail.com> - 0.17-4
 - Sync uname -r with kversion passed from scripts.
 
