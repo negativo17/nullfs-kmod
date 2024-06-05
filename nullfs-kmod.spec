@@ -20,7 +20,7 @@
 
 Name:           %{kmod_name}-kmod
 Version:        0.17
-Release:        5%{?dist}
+Release:        6%{?dist}
 Summary:        A virtual file system that behaves like /dev/null
 License:        GPLv3+
 URL:            https://github.com/abbbi/%{kmod_name}
@@ -108,6 +108,9 @@ rm -f %{buildroot}/lib/modules/%{kversion}/modules.*
 %config /etc/depmod.d/kmod-%{kmod_name}.conf
 
 %changelog
+* Wed Jun 05 2024 Simone Caronni <negativo17@gmail.com> - 0.17-6
+- Rebuild for latest kernel.
+
 * Mon Jun 03 2024 Simone Caronni <negativo17@gmail.com> - 0.17-5
 - Add patch for EL 9.4 kernel backports.
 
